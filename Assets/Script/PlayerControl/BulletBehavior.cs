@@ -9,8 +9,8 @@ public class BulletBehavior : MonoBehaviour
     public float moveSpeed = 100;
 
     public GameObject explosion;
-
     public bool move;
+    public int bulletDMG = 5;
 
     void Start()
     {
@@ -30,6 +30,8 @@ public class BulletBehavior : MonoBehaviour
         {
             Destroy(this.gameObject);
             Instantiate(explosion, transform.position, Quaternion.identity);
+
+            if (collision.gameObject.CompareTag("Enemy")) collision.gameObject.GetComponent<EnemyAttributes>().TakeDMG(bulletDMG);
         }
     }
 }
