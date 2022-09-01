@@ -17,13 +17,11 @@ public class BulletBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         Destroy(this.gameObject, 3f);
     }
-
     void FixedUpdate()
     {
         //if (move) rb.MovePosition(rb.position + transform.forward * moveSpeed);
         if(move) rb.MovePosition(rb.position  - transform.up * moveSpeed);
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         Destroy(this.gameObject);

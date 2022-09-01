@@ -7,6 +7,8 @@ public class EnemyAttributes : MonoBehaviour
 {
     [Header("Anim")]
     [SerializeField] Animator anim;
+    public SkinnedMeshRenderer skinnedMeshRenderer;
+    public Material[] skin;
 
     [Header("Colliders")]
     public BoxCollider boxCollider;
@@ -18,6 +20,7 @@ public class EnemyAttributes : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        skinnedMeshRenderer.material = skin[Random.Range(0, 3)];
     }
 
     public void TakeDMG(int dmg)

@@ -4,24 +4,26 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     
-    [SerializeField] Transform player;
-    [SerializeField] Rigidbody rb;
-    [SerializeField] EnemyAttributes enemyAttributes;
-    [SerializeField] Animator anim;
+    [SerializeField] private Transform player;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private EnemyAttributes enemyAttributes;
+    [SerializeField] private Animator anim;
 
     public float moveSpeed;
-    public float rotateSpeed; 
+    public float rotateSpeed;
+    public float speedToSpawn;
 
-    public float rangeToDetect;
-    public bool playerDetected; //Detectou player, começar a andar em direção ao player
-    
-    public bool rangeToAttacking; //Define range do atk
-    public bool isAttacking; //Inimigo ataca
-    bool dmgOnPlayerCheck; //Quando realizar o atk o player estiver na Range o mesmo leva dano
+    [SerializeField] private float rangeToDetect;
+    [SerializeField] private float rangeToAttacking; //Define range do atk
+    [SerializeField] private float distance;
 
-    bool isRunning;
+    [SerializeField] private bool attackPlayer;
+    [SerializeField] private bool isRunning;
 
+    public float timeToAtk = 0;
+    public float delayToRestartAtk = 2;
 
+    public bool readyToFight;
 
     private void Start()
     {
@@ -29,44 +31,81 @@ public class EnemyBehavior : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         enemyAttributes = GetComponent<EnemyAttributes>();
         anim = GetComponent<Animator>();
+
+        speedToSpawn = Random.Range(1f, 3f);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!enemyAttributes.isDead)
+        if(!readyToFight)
         {
-           
-            DetectPlayer();
+            rb.MovePosition(rb.position + Vector3.up * speedToSpawn * Time.fixedDeltaTime);
+            GetComponent<BoxCollider>().enabled = false;
 
-            if (playerDetected && !rangeToAttacking)
+            if (transform.position.y >= -0.689f)
             {
-                Move();
+                readyToFight = true;
+                GetComponent<BoxCollider>().enabled = true;
             }
-            else if(playerDetected && rangeToAttacking)
-            {
-                LookToPlayer();
-                isRunning = false;
-            }
+        }
 
-            anim.SetBool("isAttacking", isAttacking);
-            anim.SetBool("isRunning", isRunning);
+        if (readyToFight)
+        {
+            distance = (player.transform.position - transform.position).sqrMagnitude;
+
+            if (!enemyAttributes.isDead)
+            {
+                if(distance < rangeToDetect && distance > rangeToAttacking)
+                {
+                    Move();
+                    isRunning = true;
+                }
+                else if(distance < rangeToDetect && distance < rangeToAttacking)
+                {
+                    isRunning = false;
+
+                    if(timeToAtk < delayToRestartAtk && !attackPlayer)
+                    {
+                        timeToAtk += Time.deltaTime;
+
+                    }
+                    else if(timeToAtk > delayToRestartAtk && !attackPlayer)
+                    {
+                        //Executa uma vez o ataque antes dele reiniciar
+                    
+                        attackPlayer = true;
+                        timeToAtk = 0;
+                        delayToRestartAtk = Random.Range(1f, 4f);
+                    }
+                }
+                else
+                {
+                    isRunning = false;
+                    attackPlayer = false;
+                }
+
+                anim.SetBool("isRunning", isRunning);
+                anim.SetBool("isAttacking", attackPlayer);
+            }
         }
     }
-    
 
-
-    void DetectPlayer()
+    //Verificar se o player esta na area de dano quando o atk atingiu o player
+    private void OnTriggerStay(Collider other)
     {
-        if ((player.transform.position - transform.position).sqrMagnitude < rangeToDetect)
-        {
-            playerDetected = true;
-        }
-        else
-        {
-            playerDetected = false;
-            isRunning = false;
-        }
     }
+    //Events nas animações
+    public void CheckDmgOnPlayer(int num)
+    {
+        Debug.Log($"Dano no player: {num}");
+        
+    }
+    public void EndAttack()
+    {
+        attackPlayer = false;
+    }
+
+    #region Move Control
     void LookToPlayer()
     {
         //transform.LookAt(player, Vector3.up * Time.deltaTime) ;
@@ -79,7 +118,6 @@ public class EnemyBehavior : MonoBehaviour
     {
         LookToPlayer();
         SpeedControl();
-        isRunning = true;
 
         Vector3 direction = player.transform.position - transform.position;
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
@@ -94,52 +132,8 @@ public class EnemyBehavior : MonoBehaviour
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
     }
+    #endregion
 
-
-    //Detectar se o player esta dentro ou fora da area de ataque
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            rangeToAttacking = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            rangeToAttacking = false;
-        }
-    }
-    //Verificar se o player esta na area de dano quando o atk atingiu o player
-    private void OnTriggerStay(Collider other)
-    {
-
-        if(!isAttacking && other.gameObject.CompareTag("Player"))
-        {
-            isAttacking = true;
-        }
-        else
-        {
-            isAttacking = false;
-        }
-
-
-        if (dmgOnPlayerCheck && other.gameObject.CompareTag("Player")){
-            Debug.Log("Colisão detectada!");
-            dmgOnPlayerCheck = false;
-        }
-    }
-    //Events nas animações
-    public void CheckDmgOnPlayer(int num)
-    {
-        dmgOnPlayerCheck = true;
-        Debug.Log($"Dano no player: {num}");
-    }
-    public void EndIsAttacking()
-    {
-        isAttacking = false;
-    }
 
 
 }
