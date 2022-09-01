@@ -6,7 +6,7 @@ public class BulletBehavior : MonoBehaviour
 {
 
     Rigidbody rb;
-    public float moveSpeed = 100;
+    public float moveSpeed = 1;
 
     public GameObject explosion;
     public bool move;
@@ -18,20 +18,18 @@ public class BulletBehavior : MonoBehaviour
         Destroy(this.gameObject, 3f);
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if(move) rb.MovePosition(transform.position  -transform.up * moveSpeed * Time.fixedDeltaTime);
+        //if (move) rb.MovePosition(rb.position + transform.forward * moveSpeed);
+        if(move) rb.MovePosition(rb.position  - transform.up * moveSpeed);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!collision.gameObject.CompareTag("Player"))
-        {
-            Destroy(this.gameObject);
-            Instantiate(explosion, transform.position, Quaternion.identity);
+        Destroy(this.gameObject);
+        Instantiate(explosion, transform.position, Quaternion.identity);
 
-            if (collision.gameObject.CompareTag("Enemy")) collision.gameObject.GetComponent<EnemyAttributes>().TakeDMG(bulletDMG);
-        }
+        if (collision.gameObject.CompareTag("Enemy")) 
+            collision.gameObject.GetComponent<EnemyAttributes>().TakeDMG(bulletDMG);
     }
 }

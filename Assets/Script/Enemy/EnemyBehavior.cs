@@ -4,57 +4,52 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
     
-    public Transform player;
-    Rigidbody rb;
+    [SerializeField] Transform player;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] EnemyAttributes enemyAttributes;
+    [SerializeField] Animator anim;
+
     public float moveSpeed;
     public float rotateSpeed; 
 
     public float rangeToDetect;
     public bool playerDetected; //Detectou player, começar a andar em direção ao player
     
-    public bool attackRange; //Define range do atk
+    public bool rangeToAttacking; //Define range do atk
     public bool isAttacking; //Inimigo ataca
     bool dmgOnPlayerCheck; //Quando realizar o atk o player estiver na Range o mesmo leva dano
 
-    public float atkDelay;
+    bool isRunning;
 
-    //bool switchState;
 
-    private void OnEnable()
+
+    private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
+        enemyAttributes = GetComponent<EnemyAttributes>();
+        anim = GetComponent<Animator>();
     }
 
-    void Update()
+    private void Update()
     {
-
-
-    }
-
-    private void FixedUpdate()
-    {
-        if (!GetComponent<EnemyAttributes>().die)
+        if (!enemyAttributes.isDead)
         {
            
             DetectPlayer();
 
-            if (playerDetected && !attackRange)
+            if (playerDetected && !rangeToAttacking)
             {
                 Move();
-                GetComponent<EnemyAttributes>().AnimSetBool("isRunning", true);
             }
-            else if(playerDetected && attackRange)
+            else if(playerDetected && rangeToAttacking)
             {
-                if (!isAttacking)
-                {
-                    StartCoroutine(EndAtkAnimation());
-                    StartCoroutine(DmgCheck());
-                }
                 LookToPlayer();
-                GetComponent<EnemyAttributes>().AnimSetBool("isRunning", false);
+                isRunning = false;
             }
 
-            //if (! switchState) StartCoroutine(ChangeMoveAction());
+            anim.SetBool("isAttacking", isAttacking);
+            anim.SetBool("isRunning", isRunning);
         }
     }
     
@@ -69,8 +64,7 @@ public class EnemyBehavior : MonoBehaviour
         else
         {
             playerDetected = false;
-            GetComponent<EnemyAttributes>().AnimSetBool("isRunning", false);
-            //switchState = false;
+            isRunning = false;
         }
     }
     void LookToPlayer()
@@ -85,6 +79,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         LookToPlayer();
         SpeedControl();
+        isRunning = true;
 
         Vector3 direction = player.transform.position - transform.position;
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
@@ -101,54 +96,51 @@ public class EnemyBehavior : MonoBehaviour
     }
 
 
+    //Detectar se o player esta dentro ou fora da area de ataque
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            attackRange = true;
+            rangeToAttacking = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            attackRange = false;
+            rangeToAttacking = false;
         }
     }
-
+    //Verificar se o player esta na area de dano quando o atk atingiu o player
     private void OnTriggerStay(Collider other)
     {
-        if (dmgOnPlayerCheck && isAttacking && other.gameObject.CompareTag("Player")){
+
+        if(!isAttacking && other.gameObject.CompareTag("Player"))
+        {
+            isAttacking = true;
+        }
+        else
+        {
+            isAttacking = false;
+        }
+
+
+        if (dmgOnPlayerCheck && other.gameObject.CompareTag("Player")){
+            Debug.Log("Colisão detectada!");
             dmgOnPlayerCheck = false;
-            Debug.Log("Dano no player");
         }
     }
-    IEnumerator EndAtkAnimation()
+    //Events nas animações
+    public void CheckDmgOnPlayer(int num)
     {
-        isAttacking = true;
-        GetComponent<EnemyAttributes>().AnimSetBool("isAttacking", isAttacking);
-        yield return new WaitForSeconds(atkDelay);
-        isAttacking = false;
-        GetComponent<EnemyAttributes>().AnimSetBool("isAttacking", isAttacking);
-    }
-
-    IEnumerator DmgCheck()
-    {
-        yield return new WaitForSeconds(atkDelay /2);
         dmgOnPlayerCheck = true;
+        Debug.Log($"Dano no player: {num}");
     }
-
-    /*
-    IEnumerator ChangeMoveAction()
+    public void EndIsAttacking()
     {
-        switchState = true;
-        yield return new WaitForSeconds(Random.Range(3f, 10f));
-
-        isMoving = (Random.value > 0.5f);
-        switchState = false;
-
+        isAttacking = false;
     }
-    */
+
 
 }
 

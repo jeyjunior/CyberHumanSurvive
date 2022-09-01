@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim;
     Rigidbody rb;
     public Camera cam;
+    public LayerMask groundMask;
 
     [Header("Move Control")]
     Vector3 moveDirection;
@@ -31,13 +32,31 @@ public class PlayerMovement : MonoBehaviour
     {
         if(GetComponent<ShootingControl>().isShooting)
         {
-            RotateCharacter();
+            //RotateCharacter();
+            RotateCharacterB();
             isRunning = false;
         }
         else if(! GetComponent<ShootingControl>().isShooting) MoveModelB();
     }
 
-    void RotateCharacter()
+    void RotateCharacterB()
+    {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
+
+        RaycastHit impact;
+
+        if (Physics.Raycast(ray, out impact, 100, groundMask))
+        {
+            Vector3 playerLookPosition = impact.point - transform.position;
+            playerLookPosition.y = transform.position.y;
+
+            Quaternion newRot = Quaternion.LookRotation(playerLookPosition);
+
+            rb.MoveRotation(newRot);
+        }
+    }
+    void RotateCharacterA()
     {
         Vector2 positionOnScreen = cam.WorldToViewportPoint(transform.position);
         Vector2 mouseOnScreen = (Vector2)cam.ScreenToViewportPoint(Input.mousePosition);

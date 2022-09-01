@@ -23,9 +23,11 @@ public class ShootingControl : MonoBehaviour
         {
             delaySpawnBullet = true;
 
+            //Modelo simples:
+            //Instantiate(bullet, spawnPosition.transform.position, spawnPosition.transform.rotation);
+
             Vector3 currentEulerAngle = transform.localEulerAngles;
             currentEulerAngle.x = -90f;
-
             Instantiate(bullet, spawnPosition.position, Quaternion.Euler(currentEulerAngle));
         }
 

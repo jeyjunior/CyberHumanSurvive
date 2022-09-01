@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 86ad529a54857f24ba490579bfcc56eb
+guid: f98e921a4bf7e9644ad07becaccbf218
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -293,7 +293,7 @@ ModelImporter:
     second: Polygonal Metalon
   - first:
       74: 7400000
-    second: Stab Attack
+    second: Die
   - first:
       95: 9500000
     second: //RootNode
@@ -330,11 +330,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Stab Attack
+      name: Die
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 25
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -353,7 +353,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 1
+        functionName: Dead
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

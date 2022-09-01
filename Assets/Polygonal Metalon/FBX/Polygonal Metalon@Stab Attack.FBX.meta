@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f98e921a4bf7e9644ad07becaccbf218
+guid: 86ad529a54857f24ba490579bfcc56eb
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
@@ -293,16 +293,13 @@ ModelImporter:
     second: Polygonal Metalon
   - first:
       74: 7400000
-    second: Die
+    second: Stab Attack
   - first:
       95: 9500000
     second: //RootNode
   - first:
       137: 13700000
     second: Polygonal Metalon
-  - first:
-      74: 309098450945915473
-    second: Die (1)
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -333,11 +330,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Die
+      name: Stab Attack
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -356,7 +353,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.38075316
+        functionName: CheckDmgOnPlayer
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 32
+        messageOptions: 0
+      - time: 0.9414226
+        functionName: EndIsAttacking
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
