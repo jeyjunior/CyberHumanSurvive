@@ -7,6 +7,9 @@ TagManager:
   - Item
   - Enemy
   - Ground
+  - MagicStone
+  - FxTemporaire
+  - Particle
   layers:
   - Default
   - TransparentFX

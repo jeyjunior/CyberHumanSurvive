@@ -30,13 +30,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(GetComponent<ShootingControl>().isShooting)
+        if(GetComponent<PlayerShooting>().isShooting)
         {
             //RotateCharacter();
             RotateCharacterB();
             isRunning = false;
         }
-        else if(! GetComponent<ShootingControl>().isShooting) MoveModelB();
+        else if(! GetComponent<PlayerShooting>().isShooting) MoveModelB();
     }
 
     void RotateCharacterB()
@@ -113,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
     void AnimationControl()
     {
         anim.SetBool("isRunning", isRunning);
-        anim.SetBool("isShooting", GetComponent<ShootingControl>().isShooting);
+        anim.SetBool("isShooting", GetComponent<PlayerShooting>().isShooting);
     }
 
 

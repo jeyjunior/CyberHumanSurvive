@@ -129,6 +129,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  explosion: {fileID: 7226583673155636401, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
+  explosion: {fileID: 100000, guid: f06e78284f831ae469c74624ab5d513b, type: 3}
   move: 1
   bulletDMG: 20

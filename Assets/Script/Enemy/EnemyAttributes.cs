@@ -33,6 +33,8 @@ public class EnemyAttributes : MonoBehaviour
         {
             isDead = true;
             anim.SetBool("isDead", true);
+            GameObject.FindWithTag("GameController").GetComponent<GameController>().MaxEnemyKill();
+
         }
     }
 
@@ -49,6 +51,9 @@ public class EnemyAttributes : MonoBehaviour
 
     //Inimigo desaparece depois de afundar no chao
     void DestroyDeadEnemys(){
+
+        Instantiate(GetComponent<EnemyBehavior>().vfx[1], transform.position, transform.rotation);
+
         boxCollider.enabled = false;
         GetComponent<Rigidbody>().useGravity = true;
         Destroy(this.gameObject, 1);

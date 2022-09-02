@@ -9,6 +9,13 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private EnemyAttributes enemyAttributes;
     [SerializeField] private Animator anim;
 
+    [Space(5)]
+    public GameObject[] vfx;
+
+    [Space(5)]
+    public Transform hitPosition;
+
+    [Space(5)]
     public float moveSpeed;
     public float rotateSpeed;
     public float speedToSpawn;
@@ -21,7 +28,7 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private bool isRunning;
 
     public float timeToAtk = 0;
-    public float delayToRestartAtk = 2;
+    public float delayToRestartAtk = 1;
 
     public bool readyToFight;
 
@@ -75,7 +82,6 @@ public class EnemyBehavior : MonoBehaviour
                     
                         attackPlayer = true;
                         timeToAtk = 0;
-                        delayToRestartAtk = Random.Range(1f, 4f);
                     }
                 }
                 else
@@ -97,8 +103,8 @@ public class EnemyBehavior : MonoBehaviour
     //Events nas animações
     public void CheckDmgOnPlayer(int num)
     {
+        Instantiate(vfx[0], hitPosition.transform.position, hitPosition.transform.rotation);
         Debug.Log($"Dano no player: {num}");
-        
     }
     public void EndAttack()
     {
