@@ -25,20 +25,22 @@ public class GameController : MonoBehaviour
     [Space(5)]
     [Header("Player Life Control")]
     public int life;
-    public int maxLife;
 
     [Space(5)]
     [Header("Player Ammo Control")]
-    public int amountAmmoCase = 3; //Quantas caixa de munição personagem tem
-    public int amountOfAmmunition; //contagem de quantas balas restam no cartucho atual
-    private int maxAmountAmmoPerCase = 80; //Quantas balas por case (usada para o reload)
+    private int maxBulletPerCase = 2; //Quantas balas por case (usada para o reload)
+    
+    public int bulletCase = 3; //Quantas caixa de munição personagem tem
+    public int bulletToShoot; //contagem de quantas balas restam no cartucho atual
+    public bool reload;
 
+    GameObject player;
 
     private void Start()
     {
-        amountOfAmmunition = maxAmountAmmoPerCase;
+        bulletToShoot = maxBulletPerCase;
+        player = GameObject.FindWithTag("Player");
     }
-
     private void Update()
     {
         if (!GetComponent<GUIController>().panelsIsActive)
@@ -54,6 +56,31 @@ public class GameController : MonoBehaviour
                 EnemyControl();
             }
         }
+
+        if(bulletToShoot <= 0)
+        {
+            bulletCase--;
+            bulletToShoot = maxBulletPerCase;
+        }
+
+        if(bulletCase < 0)
+        {
+            player.GetComponent<PlayerShooting>().shootingEnable = false;
+            bulletCase = 0;
+            bulletToShoot = 0;
+        }
+        else
+        {
+            player.GetComponent<PlayerShooting>().shootingEnable = true;
+        }
+    }
+    public void TakeDmg(int dmg)
+    {
+        life -= dmg;
+    }
+    public void Shot() {
+
+        bulletToShoot--;
     }
 
     #region EnemyControl

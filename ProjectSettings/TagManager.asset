@@ -10,6 +10,7 @@ TagManager:
   - MagicStone
   - FxTemporaire
   - Particle
+  - BulletCase
   layers:
   - Default
   - TransparentFX

@@ -34,8 +34,8 @@ public class GUIController : MonoBehaviour
     private void Start()
     {
         gameController = GetComponent<GameController>();
-        lifeBar.maxValue = gameController.maxLife;
-        lifeBar.value = gameController.maxLife;
+        lifeBar.maxValue = gameController.life;
+        lifeBar.value = gameController.life;
     }
     private void Update()
     {
@@ -43,15 +43,13 @@ public class GUIController : MonoBehaviour
         TextControl();
         MagicStoneIconsControl();
     }
-
-
     public void TextControl()
     {
         txtMaxKill.text = gameController.maxDeadEnemys.ToString();
         txtKillCount.text = gameController.enemyKill.ToString();
 
-        txtAmmoCount.text = gameController.amountOfAmmunition.ToString();
-        txtAmmoCase.text = gameController.amountAmmoCase.ToString();
+        txtAmmoCount.text = gameController.bulletToShoot.ToString();
+        txtAmmoCase.text = gameController.bulletCase.ToString();
     }
     public void MagicStoneIconsControl()
     {

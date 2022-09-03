@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    GameController gameController;
     public GameObject bullet;
     public Transform spawnPosition;
 
@@ -13,31 +14,58 @@ public class PlayerShooting : MonoBehaviour
     public bool delaySpawnBullet;
 
     public bool spawnBullet;
+    public bool shootingEnable = true; //Habilita tiro se o player tiver munição
 
-    // Update is called once per frame
+    private void Start()
+    {
+        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+    }
+
     void Update()
     {
-        isShooting = Input.GetButton("Fire1");
+        if (shootingEnable)
+        {
+            isShooting = Input.GetButton("Fire1");
+            ShootingControl();
+        }
+        else
+        {
+            isShooting = false;
+            StopCoroutine(DelaySpawnBullet());
+        }
+    }
 
-        if (isShooting && ! delaySpawnBullet)
+    void ShootingControl()
+    {
+        if (isShooting && !delaySpawnBullet)
         {
             delaySpawnBullet = true;
-
-            //Modelo simples:
-            //Instantiate(bullet, spawnPosition.transform.position, spawnPosition.transform.rotation);
-
             Instantiate(bullet, spawnPosition.position, Quaternion.Euler(-90f, transform.localEulerAngles.y, transform.localEulerAngles.z));
         }
 
-        if (delaySpawnBullet && timeCount == 0) 
+        if (delaySpawnBullet && timeCount == 0)
             StartCoroutine(DelaySpawnBullet());
     }
 
     IEnumerator DelaySpawnBullet()
     {
+
+        gameController.Shot();
         timeCount++;
         yield return new WaitForSeconds(timeDelay);
+
+
+
         delaySpawnBullet = !delaySpawnBullet;
         timeCount = 0;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("BulletCase"))
+        {
+            Destroy(other.gameObject);
+            gameController.bulletCase ++;
+        }
     }
 }

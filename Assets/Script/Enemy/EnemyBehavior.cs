@@ -32,6 +32,9 @@ public class EnemyBehavior : MonoBehaviour
 
     public bool readyToFight;
 
+    bool hitPlayer;
+    public int power = 30;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -55,7 +58,6 @@ public class EnemyBehavior : MonoBehaviour
                 GetComponent<BoxCollider>().enabled = true;
             }
         }
-
         if (readyToFight)
         {
             distance = (player.transform.position - transform.position).sqrMagnitude;
@@ -96,16 +98,22 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    //Verificar se o player esta na area de dano quando o atk atingiu o player
     private void OnTriggerStay(Collider other)
     {
+        if (other.gameObject.CompareTag("Player") && hitPlayer)
+        {
+            Instantiate(vfx[0], hitPosition.transform.position, hitPosition.transform.rotation);
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().TakeDmg(power);
+            hitPlayer = false;
+        }
     }
+
     //Events nas animações
     public void CheckDmgOnPlayer(int num)
     {
-        Instantiate(vfx[0], hitPosition.transform.position, hitPosition.transform.rotation);
-        Debug.Log($"Dano no player: {num}");
+        hitPlayer = true;
     }
+
     public void EndAttack()
     {
         attackPlayer = false;

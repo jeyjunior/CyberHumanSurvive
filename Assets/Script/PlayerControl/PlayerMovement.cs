@@ -40,32 +40,17 @@ public class PlayerMovement : MonoBehaviour
         {
             if(GetComponent<PlayerShooting>().isShooting)
             {
-                //RotateCharacter();
-                RotateCharacterB();
+                RotateCharacter();
+                //RotateCharacterB();
                 isRunning = false;
             }
-            else if(! GetComponent<PlayerShooting>().isShooting) MoveModelB();
+            else if(! GetComponent<PlayerShooting>().isShooting) MoveModel();
         }
 
     }
-    void RotateCharacterB()
-    {
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
 
-        RaycastHit impact;
-
-        if (Physics.Raycast(ray, out impact, 100, groundMask))
-        {
-            Vector3 playerLookPosition = impact.point - transform.position;
-            playerLookPosition.y = transform.position.y;
-
-            Quaternion newRot = Quaternion.LookRotation(playerLookPosition);
-
-            rb.MoveRotation(newRot);
-        }
-    }
-    void RotateCharacterA()
+    #region LookAtkAngle
+    void RotateCharacter()
     {
         Vector2 positionOnScreen = cam.WorldToViewportPoint(transform.position);
         Vector2 mouseOnScreen = (Vector2)cam.ScreenToViewportPoint(Input.mousePosition);
@@ -84,16 +69,10 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         //moveDirection.Normalize();
     }
-    void MoveModelA()
+    #endregion
 
-    {
-        //rb.MovePosition(rb.position + (moveDirection * moveSpeed * Time.deltaTime));
-        Vector3 mDir = transform.forward * moveDirection.z + transform.right * moveDirection.x;
-        rb.AddForce(mDir.normalized * moveSpeed * 3f, ForceMode.Force);
 
-        SpeedControl();
-    }
-    void MoveModelB()
+    void MoveModel()
     {
         rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
         //alternative: transform.Translate(moveDirection * moveSpeed * Time.fixedDeltaTime, Space.World);
@@ -107,16 +86,10 @@ public class PlayerMovement : MonoBehaviour
 
             //transform.rotation = Quaternion.Euler(new Vector3(0f, rot.y, 0f));
         }
-        else isRunning = false;
-    }
-    void SpeedControl()
-    {
-        Vector3 vel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if (vel.magnitude > moveSpeed)
+        else
         {
-            Vector3 limitedVel = vel.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+            isRunning = false;
+            RotateCharacter();
         }
     }
     void AnimationControl()
@@ -124,8 +97,6 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isShooting", GetComponent<PlayerShooting>().isShooting);
     }
-
-
     //Interação com pilar magico
     private void OnTriggerStay(Collider other)
     {
@@ -137,4 +108,47 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+
+    /*
+         void RotateCharacterB()
+    {
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(ray.origin, ray.direction * 10000, Color.yellow);
+
+        RaycastHit impact;
+
+        if (Physics.Raycast(ray, out impact, 100, groundMask))
+        {
+            Vector3 playerLookPosition = impact.point - transform.position;
+            playerLookPosition.y = transform.position.y;
+
+            Quaternion newRot = Quaternion.LookRotation(playerLookPosition);
+
+            rb.MoveRotation(newRot);
+        }
+    }
+
+        void MoveModelB()
+
+    {
+        //rb.MovePosition(rb.position + (moveDirection * moveSpeed * Time.deltaTime));
+        Vector3 mDir = transform.forward * moveDirection.z + transform.right * moveDirection.x;
+        rb.AddForce(mDir.normalized * moveSpeed * 3f, ForceMode.Force);
+
+        SpeedControl();
+    }
+     
+
+        void SpeedControl()
+    {
+        Vector3 vel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        if (vel.magnitude > moveSpeed)
+        {
+            Vector3 limitedVel = vel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+        }
+    }
+     */
 }
