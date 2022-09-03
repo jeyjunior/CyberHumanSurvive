@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     public Camera cam;
     public LayerMask groundMask;
+    GameObject gameController;
 
     [Header("Move Control")]
     Vector3 moveDirection;
@@ -18,27 +19,35 @@ public class PlayerMovement : MonoBehaviour
     public bool isRunning;
     public bool horizontalMove, verticalMove;
 
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gameController = GameObject.FindWithTag("GameController");
     }
     void Update()
     {
-        InputMove();
-        AnimationControl();
+        if (!gameController.GetComponent<GUIController>().panelsIsActive)
+        {
+            InputMove();
+            AnimationControl();
+        }
     }
-
     private void FixedUpdate()
     {
-        if(GetComponent<PlayerShooting>().isShooting)
+        if (!gameController.GetComponent<GUIController>().panelsIsActive)
         {
-            //RotateCharacter();
-            RotateCharacterB();
-            isRunning = false;
+            if(GetComponent<PlayerShooting>().isShooting)
+            {
+                //RotateCharacter();
+                RotateCharacterB();
+                isRunning = false;
+            }
+            else if(! GetComponent<PlayerShooting>().isShooting) MoveModelB();
         }
-        else if(! GetComponent<PlayerShooting>().isShooting) MoveModelB();
-    }
 
+    }
     void RotateCharacterB()
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -117,5 +126,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-
+    //Interação com pilar magico
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag("MagicStone"))
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                other.gameObject.GetComponent<MagicStone>().ActiveMagicStone();
+            }
+        }
+    }
 }

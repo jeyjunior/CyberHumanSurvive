@@ -780,7 +780,6 @@ GameObject:
   - component: {fileID: 88329537}
   - component: {fileID: 88329538}
   - component: {fileID: 88329539}
-  - component: {fileID: 88329540}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -927,18 +926,6 @@ MonoBehaviour:
   timeDelay: 0
   delaySpawnBullet: 0
   spawnBullet: 0
---- !u!114 &88329540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88329532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e88040df5fefc744cb1fb8f30d7ac2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &91740705
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4673,7 +4660,7 @@ GameObject:
   - component: {fileID: 413024138}
   - component: {fileID: 413024137}
   m_Layer: 5
-  m_Name: BulletCase
+  m_Name: AmmoCase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5192,7 +5179,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 465396327}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: BtnActivePanels
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PanelInitialMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: TimeScaleControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &465396327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9363,7 +9374,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -800, y: -200}
+  m_SizeDelta: {x: -600, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817276966
 MonoBehaviour:
@@ -9634,7 +9645,43 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 829963750}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: BtnActivePanels
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PanelInitialMenu
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: TimeScaleControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: SaveData
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &829963750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10150,7 +10197,7 @@ GameObject:
   - component: {fileID: 913226999}
   - component: {fileID: 913226998}
   m_Layer: 5
-  m_Name: BtnConfig
+  m_Name: BtnPause
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10219,7 +10266,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 913226999}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: BtnActivePanels
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PanelPause
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: TimeScaleControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &913226999
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10341,7 +10412,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 924817570}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: BtnActivePanels
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: TimeScaleControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &924817570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14381,7 +14476,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -800, y: -200}
+  m_SizeDelta: {x: -600, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1219316344
 MonoBehaviour:
@@ -16556,7 +16651,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -800, y: -200}
+  m_SizeDelta: {x: -600, y: -200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1442422556
 MonoBehaviour:
@@ -21161,7 +21256,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1922815680}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: BtnActivePanels
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: PanelSettings
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: TimeScaleControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1922815680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21763,6 +21882,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1996577799}
   - component: {fileID: 1996577798}
+  - component: {fileID: 1996577800}
   m_Layer: 0
   m_Name: GameController
   m_TagString: GameController
@@ -21784,13 +21904,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   conqueredWaves: 0
   maxWave: 3
-  maxEnemyToSpawn: 1
+  spawnNextWave: 0
+  maxEnemyToSpawn: 15
   enemySpawned: 0
   enemyKill: 0
   maxDeadEnemys: 0
   magicStone: {fileID: 241942402}
   enemy: {fileID: 1783563462218004, guid: 7f931d4b5c97d194d8726ddf5acdd440, type: 3}
-  spawnNextWave: 0
+  life: 0
+  maxLife: 0
+  amountAmmoCase: 3
+  amountOfAmmunition: 0
 --- !u!4 &1996577799
 Transform:
   m_ObjectHideFlags: 0
@@ -21806,6 +21930,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1996577800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996577797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e88040df5fefc744cb1fb8f30d7ac2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeBar: {fileID: 937154999}
+  txtMaxKill: {fileID: 96220081}
+  txtKillCount: {fileID: 952988857}
+  txtAmmoCount: {fileID: 2120774815}
+  txtAmmoCase: {fileID: 413024137}
+  activatedStoneCount: 0
+  magicStonesIcon:
+  - {fileID: 1540661527}
+  - {fileID: 1790410068}
+  - {fileID: 1352057027}
+  panels:
+  - {fileID: 1219316342}
+  - {fileID: 817276964}
+  - {fileID: 1442422554}
+  panelsIsActive: 0
+  BtnPause: {fileID: 913226996}
 --- !u!1001 &1997424625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23559,7 +23711,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2131520333}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: BtnActivePanels
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: TimeScaleControl
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2131520333
 MonoBehaviour:
   m_ObjectHideFlags: 0
