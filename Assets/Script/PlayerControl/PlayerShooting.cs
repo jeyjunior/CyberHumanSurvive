@@ -35,31 +35,33 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
+    //Atirar
     void ShootingControl()
     {
         if (isShooting && !delaySpawnBullet)
         {
             delaySpawnBullet = true;
-            Instantiate(bullet, spawnPosition.position, Quaternion.Euler(-90f, transform.localEulerAngles.y, transform.localEulerAngles.z));
         }
 
         if (delaySpawnBullet && timeCount == 0)
             StartCoroutine(DelaySpawnBullet());
     }
 
+    //Delay para poder atirar novamente
     IEnumerator DelaySpawnBullet()
     {
 
         gameController.Shot();
         timeCount++;
         yield return new WaitForSeconds(timeDelay);
-
-
+        Instantiate(bullet, spawnPosition.position, Quaternion.Euler(-90f, transform.localEulerAngles.y, transform.localEulerAngles.z));
 
         delaySpawnBullet = !delaySpawnBullet;
         timeCount = 0;
     }
+    
 
+    //Coletando munição
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("BulletCase"))

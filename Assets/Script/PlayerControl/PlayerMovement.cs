@@ -71,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
-
     void MoveModel()
     {
         rb.MovePosition(transform.position + moveDirection * moveSpeed * Time.deltaTime);
@@ -97,7 +96,9 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isRunning", isRunning);
         anim.SetBool("isShooting", GetComponent<PlayerShooting>().isShooting);
     }
-    //Interação com pilar magico
+
+
+    //Iteração com pilar magico
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("MagicStone"))

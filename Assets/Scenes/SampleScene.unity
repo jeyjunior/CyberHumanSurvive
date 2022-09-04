@@ -923,7 +923,7 @@ MonoBehaviour:
   bullet: {fileID: 7643734982381210887, guid: 258a3fb80c6fd364ba0037d7ce01ce1d, type: 3}
   spawnPosition: {fileID: 950065785}
   isShooting: 0
-  timeDelay: 0.2
+  timeDelay: 0.1
   delaySpawnBullet: 0
   spawnBullet: 0
   shootingEnable: 0
@@ -21891,9 +21891,10 @@ MonoBehaviour:
   maxDeadEnemys: 0
   magicStone: {fileID: 241942402}
   enemy: {fileID: 1783563462218004, guid: 7f931d4b5c97d194d8726ddf5acdd440, type: 3}
+  ammo: {fileID: 1607509239820096833, guid: 8ec157fbbbbe628489bd920a6117b5c4, type: 3}
   life: 100
-  bulletCase: 3
-  bulletToShoot: 0
+  bulletCase: 2
+  bulletToShoot: 120
   reload: 0
 --- !u!4 &1996577799
 Transform:

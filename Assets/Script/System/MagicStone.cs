@@ -53,6 +53,7 @@ public class MagicStone : MonoBehaviour
             activated = true;
             SpawnParticles();
             gameController.spawnNextWave = true;
+            gameController.SpawnAmmo();
         }
     }
 

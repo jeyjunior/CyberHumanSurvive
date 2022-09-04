@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     [Header("Objs")]
     public MagicStone magicStone;
     public GameObject enemy;
+    public GameObject ammo;
+    GameObject player;
 
     [Space(5)]
     [Header("Player Life Control")]
@@ -28,13 +30,12 @@ public class GameController : MonoBehaviour
 
     [Space(5)]
     [Header("Player Ammo Control")]
-    private int maxBulletPerCase = 2; //Quantas balas por case (usada para o reload)
-    
+    private int maxBulletPerCase = 120; //Quantas balas por case (usada para o reload)
     public int bulletCase = 3; //Quantas caixa de munição personagem tem
     public int bulletToShoot; //contagem de quantas balas restam no cartucho atual
     public bool reload;
 
-    GameObject player;
+    
 
     private void Start()
     {
@@ -57,13 +58,25 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if(bulletToShoot <= 0)
+        BulletControl();
+    }
+    public void TakeDmg(int dmg)
+    {
+        life -= dmg;
+    }
+    public void Shot() {
+
+        bulletToShoot--;
+    }
+    void BulletControl()
+    {
+        if (bulletToShoot <= 0)
         {
             bulletCase--;
             bulletToShoot = maxBulletPerCase;
         }
 
-        if(bulletCase < 0)
+        if (bulletCase < 0)
         {
             player.GetComponent<PlayerShooting>().shootingEnable = false;
             bulletCase = 0;
@@ -73,14 +86,6 @@ public class GameController : MonoBehaviour
         {
             player.GetComponent<PlayerShooting>().shootingEnable = true;
         }
-    }
-    public void TakeDmg(int dmg)
-    {
-        life -= dmg;
-    }
-    public void Shot() {
-
-        bulletToShoot--;
     }
 
     #region EnemyControl
@@ -92,12 +97,15 @@ public class GameController : MonoBehaviour
             magicStone.activated = false;
             enemyKill = 0;
             enemySpawned = 0;
+            
         }
     }
+
+    //EnemyAttributes ira fazer a contagem quando inimigo morrer
     public void MaxEnemyKill()
     {
         enemyKill++;
-        maxDeadEnemys += enemyKill;
+        maxDeadEnemys++;
     }
     void SpawnEnemies()
     {
@@ -127,6 +135,14 @@ public class GameController : MonoBehaviour
     }
     #endregion
 
-
+    #region SpawnAmmo
+    public void SpawnAmmo()
+    {
+        //Interagir com o pilar, spawna uma caixa de munição
+        Vector3 pos = RandomPosition((int)Random.Range(1, 4));
+        pos.y = -1;
+        Instantiate(ammo, pos, Quaternion.identity);
+    }
+    #endregion
 
 }
