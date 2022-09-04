@@ -14,13 +14,33 @@ public class EnemyAttributes : MonoBehaviour
     public BoxCollider boxCollider;
 
     [Header("Atributos")]
-    public int life = 300;
+    private int life;
+    private int power;
     public bool isDead = false;
 
-    private void Start()
+
+    private void OnEnable()
     {
         anim = GetComponent<Animator>();
         skinnedMeshRenderer.material = skin[Random.Range(0, 3)];
+
+        GUIController gameController = GameObject.FindWithTag("GameController").GetComponent<GUIController>();
+
+        switch (gameController.difficulty)
+        {
+            case 0:
+                life = 100;
+                power = 10;
+                break;
+            case 1:
+                life = 200;
+                power = 50;
+                break;
+            case 2:
+                life = 300;
+                power = 100;
+                break;
+        }
     }
 
     public void TakeDMG(int dmg)
@@ -38,7 +58,10 @@ public class EnemyAttributes : MonoBehaviour
         }
     }
 
-
+    public int EnemyPower()
+    {
+        return power;
+    }
 
     #region Sistema de morte
 

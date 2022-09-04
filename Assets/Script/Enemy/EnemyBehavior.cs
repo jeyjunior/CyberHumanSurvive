@@ -33,7 +33,7 @@ public class EnemyBehavior : MonoBehaviour
     public bool readyToFight;
 
     bool hitPlayer;
-    public int power = 30;
+
 
     private void Start()
     {
@@ -103,7 +103,7 @@ public class EnemyBehavior : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && hitPlayer)
         {
             Instantiate(vfx[0], hitPosition.transform.position, hitPosition.transform.rotation);
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().TakeDmg(power);
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>().TakeDmg(enemyAttributes.EnemyPower());
             hitPlayer = false;
         }
     }

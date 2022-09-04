@@ -23,15 +23,19 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (shootingEnable)
+
+        if (!gameController.GetComponent<GUIController>().panelsIsActive)
         {
-            isShooting = Input.GetButton("Fire1");
-            ShootingControl();
-        }
-        else
-        {
-            isShooting = false;
-            StopCoroutine(DelaySpawnBullet());
+            if (shootingEnable)
+            {
+                isShooting = Input.GetButton("Fire1");
+                ShootingControl();
+            }
+            else
+            {
+                isShooting = false;
+                StopCoroutine(DelaySpawnBullet());
+            }
         }
     }
 

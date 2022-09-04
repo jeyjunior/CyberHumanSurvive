@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GUIController : MonoBehaviour
 {
@@ -30,18 +31,49 @@ public class GUIController : MonoBehaviour
     [Header("Btn")]
     public GameObject BtnPause;
 
+    [Header("Game Difficulty")]
+    public int difficulty; //0: Easy, 1: Normal, 2: Hard
+    public string nameDifficulty;
+    public TMP_Text txtDifficulty;
+
+
+    [Header("Volume")]
+    public TMP_Text txtVolume;
+    public Slider volume;
+
 
     private void Start()
     {
         gameController = GetComponent<GameController>();
         lifeBar.maxValue = gameController.life;
         lifeBar.value = gameController.life;
+        BtnActivePanels("PanelInitialMenu");
+        TimeScaleControl(0);
+
+        //Volume no 50%
+        volume.value = 0.5f;
     }
     private void Update()
     {
         lifeBar.value = gameController.life;
         TextControl();
         MagicStoneIconsControl();
+        DifficultyControl();
+
+
+    }
+    public void TimeScaleControl(float value)
+    {
+        Time.timeScale = value;
+
+        if(value == 0)
+        {
+            BtnPause.SetActive(false);
+        }
+        else
+        {
+            BtnPause.SetActive(true);
+        }
     }
     public void TextControl()
     {
@@ -50,6 +82,8 @@ public class GUIController : MonoBehaviour
 
         txtAmmoCount.text = gameController.bulletToShoot.ToString();
         txtAmmoCase.text = gameController.bulletCase.ToString();
+
+        txtVolume.text = "Volume: " + (volume.value * 100).ToString("F0") + "%";
     }
     public void MagicStoneIconsControl()
     {
@@ -72,29 +106,109 @@ public class GUIController : MonoBehaviour
             }
         }
     }
+
+    #region Play Game
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void NewGame()
+    {
+        //Utilizando no newgame e no continue
+       StartCoroutine(StartGameCount(1));
+    }
+    public void Continue()
+    {
+        StartCoroutine(StartGameCount(0));
+    }
+    IEnumerator StartGameCount(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        //Espera 2 segundos antes de ativar o bullet, assim player não atira enquanto esta navegando nos menus
+        panelsIsActive = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerShooting>().shootingEnable = true;
+    }
+
+    #endregion
+
+    #region Panels Control
     public void BtnActivePanels(string name)
     {
         foreach(GameObject panel in panels)
         {
-            if (panel.name == name) panel.SetActive(true);
-            else panel.SetActive(false);
+            if (panel.name == name)
+            {
+                panel.SetActive(true);
+                panelsIsActive = true;
+            }
+            else
+            {
+                panel.SetActive(false);
+            }
         }
     }
-    public void TimeScaleControl(float value)
-    {
-        Time.timeScale = value;
 
-        if(panelsIsActive)
+    #endregion
+
+    #region Game Difficulty
+    public void SetGameDifficulty(bool addValue)
+    {
+        //addValue false = subtração / addValue true = adição
+
+        if (!addValue)
         {
-            BtnPause.SetActive(false);
+            difficulty--;
         }
         else
         {
-            BtnPause.SetActive(true);
+            difficulty++;
         }
     }
+    void DifficultyControl()
+    {
+
+
+        if (difficulty < 0)
+        {
+            difficulty = 2;
+        }
+        else if(difficulty > 2)
+        {
+            difficulty = 0;
+        }
+
+        switch (difficulty)
+        {
+            case 0:
+                nameDifficulty = "Easy";
+                break;
+            case 1:
+                nameDifficulty = "Normal";
+                break;
+            case 2:
+                nameDifficulty = "Hard";
+                break;
+        }
+
+        txtDifficulty.text = nameDifficulty;
+    }
+    #endregion
+
+    #region Set Volume - Programar o valor do slider no volume dos audios
+    public void VolumeControl()
+    {
+        //Configurar o audio conforme o valor do slider
+    }
+    #endregion
+
+    #region Data
     public void SaveData()
     {
         //Salvar quando clicar no botão voltar
     }
+    public void LoadData()
+    {
+
+    }
+    #endregion
 }

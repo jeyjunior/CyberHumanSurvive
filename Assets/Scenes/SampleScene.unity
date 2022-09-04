@@ -2281,7 +2281,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -47.7}
+  m_AnchoredPosition: {x: 0, y: -47.69995}
   m_SizeDelta: {x: -200, y: -350.37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &206682905
@@ -4192,10 +4192,10 @@ RectTransform:
   m_Father: {fileID: 817276965}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 152.15, y: -47.485004}
-  m_SizeDelta: {x: -404.3, y: -350}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -80, y: -50}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &363457233
 MonoBehaviour:
@@ -4240,7 +4240,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 363457234}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: SetGameDifficulty
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &363457234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4970,7 +4982,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 43.4}
-  m_SizeDelta: {x: -294, y: -380}
+  m_SizeDelta: {x: -100, y: -380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &430341146
 MonoBehaviour:
@@ -5135,7 +5147,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: -254, y: -350}
+  m_SizeDelta: {x: -100, y: -350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &465396326
 MonoBehaviour:
@@ -5197,6 +5209,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
         m_MethodName: TimeScaleControl
         m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: RestartGame
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7413,7 +7437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5.1850004}
+  m_AnchoredPosition: {x: 0, y: -5.1850586}
   m_SizeDelta: {x: 0, y: -364.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &624776724
@@ -9596,7 +9620,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -129.7}
-  m_SizeDelta: {x: -254, y: -350}
+  m_SizeDelta: {x: -100, y: -350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &829963749
 MonoBehaviour:
@@ -10363,7 +10387,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 45}
-  m_SizeDelta: {x: -254, y: -350}
+  m_SizeDelta: {x: -100, y: -350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &924817569
 MonoBehaviour:
@@ -10409,6 +10433,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: NewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1996577800}
         m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
         m_MethodName: BtnActivePanels
@@ -17821,10 +17857,10 @@ RectTransform:
   m_Father: {fileID: 817276965}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -151.9, y: -47.485004}
-  m_SizeDelta: {x: -405.8, y: -350}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 80, y: -50}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1571431543
 MonoBehaviour:
@@ -17869,7 +17905,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1571431544}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: SetGameDifficulty
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1571431544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21191,7 +21239,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -25}
-  m_SizeDelta: {x: -254, y: -350}
+  m_SizeDelta: {x: -100, y: -350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922815679
 MonoBehaviour:
@@ -21939,6 +21987,9 @@ MonoBehaviour:
   - {fileID: 1442422554}
   panelsIsActive: 0
   BtnPause: {fileID: 913226996}
+  difficulty: 0
+  nameDifficulty: 
+  txtDifficulty: {fileID: 206682905}
 --- !u!1001 &1997424625
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23635,7 +23686,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 45}
-  m_SizeDelta: {x: -254, y: -350}
+  m_SizeDelta: {x: -100, y: -350}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2131520332
 MonoBehaviour:
@@ -23702,6 +23753,18 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 1
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1996577800}
+        m_TargetAssemblyTypeName: GUIController, Assembly-CSharp
+        m_MethodName: NewGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
