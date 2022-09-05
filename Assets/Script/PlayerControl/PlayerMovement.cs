@@ -19,7 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public bool isRunning;
     public bool horizontalMove, verticalMove;
 
-
+    [Header("Audio Walk")]
+    public AudioSource walkAudioSource;
+    public bool walkSound;
 
     void Start()
     {
@@ -83,14 +85,63 @@ public class PlayerMovement : MonoBehaviour
             Quaternion rot = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rot, rotationSpeed * Time.fixedDeltaTime);
 
+
             //transform.rotation = Quaternion.Euler(new Vector3(0f, rot.y, 0f));
+            PlayWalkSound(true);
         }
         else
         {
             isRunning = false;
             RotateCharacter();
+
+            PlayWalkSound(false);
+            /*
+            if(walkAudioSource.isPlaying)
+            {
+                walkAudioSource.volume -= Time.deltaTime * 2;
+                if(walkAudioSource.volume <= 0)
+                {
+                    walkAudioSource.Stop();
+                    playWalkSound = false;
+                }
+            }
+            */
+
         }
     }
+    public void PlayWalkSound(bool value)
+    {
+        
+        if(value)
+        {
+            if (!walkSound)
+            {
+                walkAudioSource.volume = gameController.GetComponent<GUIController>().volume.value;
+                walkAudioSource.Play(0);
+                walkSound = true;
+            }
+            //GetComponent<AudioSource>().PlayOneShot(walkSound);
+        }
+        else
+        {
+            if (GetComponent<PlayerShooting>().isShooting)
+            {
+                walkAudioSource.Stop();
+                walkSound = false;
+            }
+            else
+            {
+                walkAudioSource.volume -= Time.deltaTime * 4;
+                if(walkAudioSource.volume <= 0)
+                {
+                    walkAudioSource.Stop();
+                    walkSound = false;
+                }
+            }
+        }
+    }
+
+
     void AnimationControl()
     {
         anim.SetBool("isRunning", isRunning);
@@ -103,13 +154,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MagicStone"))
         {
+
             if (Input.GetKeyDown(KeyCode.E))
             {
                 other.gameObject.GetComponent<MagicStone>().ActiveMagicStone();
+                gameController.GetComponent<GUIController>().instruction.SetActive(false);
             }
         }
     }
-
 
     /*
          void RotateCharacterB()

@@ -6,18 +6,20 @@ public class MagicStone : MonoBehaviour
 {
 
     //Se o player não interagir com ela, ativado é falso
+    [Header("Interaction")]
     public bool activated;
     bool particlesSpawned;
 
+    [Header("Objs")]
     public GameObject[] vfx;
     public MeshRenderer meshRendererMaterial;
-    GameController gameController;
+    GameObject gameController;
 
     float timeToChangeColor = 0;
-
+    
     void Start()
     {
-        gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        gameController = GameObject.FindWithTag("GameController");
         meshRendererMaterial.material.color = new Color(0, 0, 0);
     }
 
@@ -25,7 +27,6 @@ public class MagicStone : MonoBehaviour
     {
 
         ChangeStoneColor();
-
     }
 
 
@@ -48,12 +49,14 @@ public class MagicStone : MonoBehaviour
 
     public void ActiveMagicStone()
     {
-        if(!activated && gameController.conqueredWaves < gameController.maxWave)
+        if(!activated && gameController.GetComponent<GameController>().conqueredWaves < gameController.GetComponent<GameController>().maxWave)
         {
+            
             activated = true;
             SpawnParticles();
-            gameController.spawnNextWave = true;
-            gameController.SpawnAmmo();
+            gameController.GetComponent<GameController>().spawnNextWave = true;
+            gameController.GetComponent<GameController>().SpawnAmmo();
+            PlaySound();
         }
     }
 
@@ -64,9 +67,29 @@ public class MagicStone : MonoBehaviour
         Instantiate(vfx[2], transform.position, Quaternion.identity);
 
     }
-    void PlaySound()
+    public void PlaySound()
     {
-        //Tocar algum som de conquista
+        GetComponent<AudioSource>().Play();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            if(!gameController.GetComponent<GUIController>().panelsIsActive && !activated)
+            {
+                gameController.GetComponent<GUIController>().instruction.SetActive(true);
+
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            gameController.GetComponent<GUIController>().instruction.SetActive(false);
+        }
     }
 
 }

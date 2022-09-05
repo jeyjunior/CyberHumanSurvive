@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public int conqueredWaves = 0;
     public int maxWave = 3;
     public bool spawnNextWave;
+    public bool winGame;
 
     [Space(5)]
     [Header("Enemy Control")]
@@ -23,10 +24,12 @@ public class GameController : MonoBehaviour
     public GameObject enemy;
     public GameObject ammo;
     GameObject player;
+    GUIController guiController;
 
     [Space(5)]
     [Header("Player Life Control")]
     public int life;
+    public bool isDead;
 
     [Space(5)]
     [Header("Player Ammo Control")]
@@ -41,6 +44,7 @@ public class GameController : MonoBehaviour
     {
         bulletToShoot = maxBulletPerCase;
         player = GameObject.FindWithTag("Player");
+        guiController = GetComponent<GUIController>();
     }
     private void Update()
     {
@@ -59,6 +63,27 @@ public class GameController : MonoBehaviour
         }
 
         BulletControl();
+
+        //gameOver
+        if(life <= 0 && !isDead)
+        {
+            guiController.txtMaxKillLoose.text = $"Max kill: {maxDeadEnemys}";
+
+            guiController.ActivePanels("PanelLooseGame");
+            guiController.TimeScaleControl(0);
+            isDead = true;
+        }
+        
+        //win
+        if(conqueredWaves >= maxWave && !winGame)
+        {
+            guiController.txtMaxKillWin.text = $"Max kill: {maxDeadEnemys}";
+
+            guiController.ActivePanels("PanelWinGame");
+            guiController.TimeScaleControl(0);
+            winGame = true;
+
+        }
     }
     public void TakeDmg(int dmg)
     {
@@ -111,38 +136,41 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < maxEnemyToSpawn; i++)
         {
-            int chooseSide = (int)Random.Range(1, 4);
-            Instantiate(enemy, RandomPosition(chooseSide), Quaternion.identity);
+            //int chooseSide = (int)Random.Range(1, 4);
+            Instantiate(enemy, new Vector3(Random.Range(-20,20), Random.Range(-10,-15), Random.Range(-20,20)), Quaternion.identity);
             enemySpawned++;
         }
     }
+    /*
     private Vector3 RandomPosition(int value)
     {
         switch (value)
         {
             case 1:
                 //Esquerda
-                return new Vector3(Random.Range(-19f, -10f), Random.Range(-5f, -3f), Random.Range(18f, -16f));
+                return new Vector3(Random.Range(-19f, -10f), Random.Range(-10f, -5f), Random.Range(18f, -16f));
             case 2:
                 //Baixo
-                return new Vector3(Random.Range(-19f, 19f), Random.Range(-5f, -3f), Random.Range(-16f, -22f));            
+                return new Vector3(Random.Range(-19f, 19f), Random.Range(-10f, -5f), Random.Range(-16f, -22f));            
             case 3:
                 //Direita
-                return new Vector3(Random.Range(8f, 20f), Random.Range(-5f, -3f), Random.Range(20f, -18f));
+                return new Vector3(Random.Range(8f, 20f), Random.Range(-10f, -5f), Random.Range(20f, -18f));
             default:
-                return new Vector3(Random.Range(-19f, 19f), Random.Range(-5f, -3f), Random.Range(-16f, -22f));
+                return new Vector3(Random.Range(-19f, 19f), Random.Range(-10f, -5f), Random.Range(-16f, -22f));
         }
     }
+    */
     #endregion
 
     #region SpawnAmmo
     public void SpawnAmmo()
     {
-        //Interagir com o pilar, spawna uma caixa de munição
-        Vector3 pos = RandomPosition((int)Random.Range(1, 4));
-        pos.y = -1;
-        Instantiate(ammo, pos, Quaternion.identity);
+        //Interagir com o pilar, spawna caixa de munição
+        //Quantidade de munição será de acordo com a dificuldade
+        for(int i = 0; i < GetComponent<GUIController>().difficulty + 1; i++)
+        {
+            Instantiate(ammo, new Vector3(Random.Range(-20, 20), -1, Random.Range(-20, 20)), Quaternion.identity);
+        }
     }
     #endregion
-
 }

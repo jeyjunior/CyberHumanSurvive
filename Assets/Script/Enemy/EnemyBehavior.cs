@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    
+
     [SerializeField] private Transform player;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private EnemyAttributes enemyAttributes;
@@ -35,8 +35,23 @@ public class EnemyBehavior : MonoBehaviour
     bool hitPlayer;
 
 
+    [Header("Audio Control")]
+    AudioSource audioSource;
+    public AudioClip[] clips;
+    public bool isPlayingWalkSound;
+    //float walkSoundTime;
+    //float delayWalkSound = 0;
+
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = GameObject.FindWithTag("GameController").GetComponent<GUIController>().volume.value;
+
+        //walkSoundTime = clips[0].length;
+
+
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         enemyAttributes = GetComponent<EnemyAttributes>();
@@ -47,8 +62,11 @@ public class EnemyBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!readyToFight)
+        if (!readyToFight)
         {
+            //Momento em que o inimigo é instanciado, ele surge do chao
+            //Enquanto não alcançar a posição no eixo y, ele continuará subindo
+            //Quando encontrar a posição troca o valor de reayToFight para verdadeiro e começa a seguir o player
             rb.MovePosition(rb.position + Vector3.up * speedToSpawn * Time.fixedDeltaTime);
             GetComponent<BoxCollider>().enabled = false;
 
@@ -58,32 +76,35 @@ public class EnemyBehavior : MonoBehaviour
                 GetComponent<BoxCollider>().enabled = true;
             }
         }
+
+
         if (readyToFight)
         {
             distance = (player.transform.position - transform.position).sqrMagnitude;
 
             if (!enemyAttributes.isDead)
             {
-                if(distance < rangeToDetect && distance > rangeToAttacking)
+                if (distance < rangeToDetect && distance > rangeToAttacking)
                 {
                     Move();
                     isRunning = true;
                 }
-                else if(distance < rangeToDetect && distance < rangeToAttacking)
+                else if (distance < rangeToDetect && distance < rangeToAttacking)
                 {
                     isRunning = false;
 
-                    if(timeToAtk < delayToRestartAtk && !attackPlayer)
+                    if (timeToAtk < delayToRestartAtk && !attackPlayer)
                     {
                         timeToAtk += Time.deltaTime;
 
                     }
-                    else if(timeToAtk > delayToRestartAtk && !attackPlayer)
+                    else if (timeToAtk > delayToRestartAtk && !attackPlayer)
                     {
                         //Executa uma vez o ataque antes dele reiniciar
-                    
+
                         attackPlayer = true;
                         timeToAtk = 0;
+                        PlayAtkSound();
                     }
                 }
                 else
@@ -135,6 +156,7 @@ public class EnemyBehavior : MonoBehaviour
 
         Vector3 direction = player.transform.position - transform.position;
         rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+       
     }
     void SpeedControl()
     {
@@ -148,7 +170,33 @@ public class EnemyBehavior : MonoBehaviour
     }
     #endregion
 
+    void PlayAtkSound()
+    {
+        audioSource.PlayOneShot(clips[1]);
+    }
 
+    /*
+    void PlayWalkSoung()
+    {
+        if (isRunning)
+        {
+            if (!isPlayingWalkSound)
+            {
+                audioSource.PlayOneShot(clips[0]);
+                isPlayingWalkSound = true;
+                delayWalkSound = walkSoundTime;
+            }
+            else
+            {
+                delayWalkSound -= Time.deltaTime;
+                if(delayWalkSound < 0)
+                {
+                    isPlayingWalkSound = false;
+                }
+            }
+        }
+    }
+    */
 
 }
 

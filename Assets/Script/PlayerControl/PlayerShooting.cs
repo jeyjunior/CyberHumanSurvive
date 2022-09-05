@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    [Header("Obs")]
     GameController gameController;
     public GameObject bullet;
     public Transform spawnPosition;
 
+    [Header("Shooting Control")]
     public bool isShooting;
     public float timeDelay;
     float timeCount = 0;
@@ -16,9 +18,17 @@ public class PlayerShooting : MonoBehaviour
     public bool spawnBullet;
     public bool shootingEnable = true; //Habilita tiro se o player tiver munição
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip pickupAmmon;
+
+
     private void Start()
     {
         gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+
+        //Volume Audio
+
     }
 
     void Update()
@@ -54,9 +64,14 @@ public class PlayerShooting : MonoBehaviour
     //Delay para poder atirar novamente
     IEnumerator DelaySpawnBullet()
     {
+        //Stop walk sound
+        GetComponent<PlayerMovement>().PlayWalkSound(false);
+
 
         gameController.Shot();
         timeCount++;
+
+        audioSource.Play(0);
         yield return new WaitForSeconds(timeDelay);
         Instantiate(bullet, spawnPosition.position, Quaternion.Euler(-90f, transform.localEulerAngles.y, transform.localEulerAngles.z));
 
@@ -64,7 +79,6 @@ public class PlayerShooting : MonoBehaviour
         timeCount = 0;
     }
     
-
     //Coletando munição
     private void OnTriggerEnter(Collider other)
     {
@@ -72,6 +86,7 @@ public class PlayerShooting : MonoBehaviour
         {
             Destroy(other.gameObject);
             gameController.bulletCase ++;
+            audioSource.PlayOneShot(pickupAmmon);
         }
     }
 }
